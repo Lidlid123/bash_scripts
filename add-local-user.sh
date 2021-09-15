@@ -12,13 +12,13 @@ fi
 
 read -p "please enter the username : " username
 
-read -p " enter the user real name : " realname
+read -p " enter the user real name : " commet
 
 read -p "enter password for user : " password
 
 
 
-useradd -m "${username}"  -c "${realname}" 
+useradd -m "${username}"  -c "${commet}" 
 
 
 
