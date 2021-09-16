@@ -21,21 +21,15 @@ fi
 
 username="${1}"
 
-commet="${2}"
+shift
+
+commets="${@}"
 
 logfile="logfile.log"
 
-if [[ ${commet} == *" "* || -z "${commet}" ]]; then
-        useradd -m "${username}"  -c "${commet}" 2>> ${logfile}
-	if [[ "${?}" -ne 0 ]] ; then 
-		echo "there was a probelem with the creation proccess , check log file : logfile.log"
-		exit 1
-	fi
-else
-	echo " second arguemet must contain ' commet '  "
-	exit 1
-fi
+useradd -m "${username}" -c "${commets}"
 
+echo "${commets[@]}"
 
 
 password=$(date +%s%N${RANDOM} | sha256sum | head -c48)
@@ -43,6 +37,8 @@ password=$(date +%s%N${RANDOM} | sha256sum | head -c48)
 
 
 echo "${username}:${password}" | sudo  chpasswd
+
+passwd -e ${username} 1> /dev/null
 
 
 echo "your username is : ${username}"
